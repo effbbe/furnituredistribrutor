@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 
 class ProductResource extends Resource
 {
@@ -28,17 +31,25 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('sku')
-                    ->label('Kode SKU')
-                    ->required()
-                    ->maxLength(255),
-                    Forms\Components\TextInput::make('product_name')
-                    ->label('Nama Produk')
-                    ->required()
-                    ->maxLength(255),
+                ->label('Kode SKU')
+                ->required()
+                ->maxLength(255),
+                Forms\Components\TextInput::make('product_name')
+                ->label('Nama Produk')
+                ->required()
+                ->maxLength(255),
                 Forms\Components\Textarea::make('description')
-                    ->label('Deskripsi Produk')
-                    ->required()
-                    ->columnSpanFull(),
+                ->label('Deskripsi Produk')
+                ->required()
+                ->columnSpanFull(),
+                Forms\Components\TextInput::make('unit')
+                ->label('Unit')
+                ->maxLength(50)
+                ->required(),
+                Forms\Components\TextInput::make('unit_price')
+                ->label('Harga Satuan')
+                ->maxLength(50)
+                ->required(),
             ]);
     }
 
@@ -47,13 +58,22 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('sku')
-                ->label('SKU')
+                ->label('SKU')                
                 ->searchable(),
                 Tables\Columns\TextColumn::make('product_name')
-                ->label('Nama Produk')
+                ->label('Nama Produk')                
                 ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                 ->label('Deskripsi Produk'),               
+                Tables\Columns\TextColumn::make('Unit')
+                ->label('Unit'),             
+                Tables\Columns\TextColumn::make('unit_price')
+                ->label('Harga Satuan'),
+                Tables\Columns\TextColumn::make('current_stock')
+                ->label('Total Stok'),
+                Tables\Columns\TextColumn::make('category')
+                ->label('Kategori')
+                ->searchable(),                
             ])
             ->filters([
                 //
