@@ -15,6 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Grid;
+
+use App\Models\Category;
+use App\Models\Unit;
 
 class ProductResource extends Resource
 {
@@ -42,14 +46,19 @@ class ProductResource extends Resource
                 ->label('Deskripsi Produk')
                 ->required()
                 ->columnSpanFull(),
-                Forms\Components\TextInput::make('unit')
-                ->label('Unit')
-                ->maxLength(50)
-                ->required(),
+                Select::make('unit')
+                ->label('Satuan')
+                ->options(Unit::all()->pluck('unit_symbols', 'unit_symbols'))
+                ->searchable(),
                 Forms\Components\TextInput::make('unit_price')
                 ->label('Harga Satuan')
+                //->money($symbol = 'idr', $thousandsSeparator = ',', $decimals = 0)
                 ->maxLength(50)
                 ->required(),
+                Select::make('category')
+                ->label('Kategori Produk')
+                ->options(Category::all()->pluck('category', 'category'))
+                ->searchable()
             ]);
     }
 
@@ -65,10 +74,11 @@ class ProductResource extends Resource
                 ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                 ->label('Deskripsi Produk'),               
-                Tables\Columns\TextColumn::make('Unit')
+                Tables\Columns\TextColumn::make('unit')
                 ->label('Unit'),             
                 Tables\Columns\TextColumn::make('unit_price')
                 ->label('Harga Satuan'),
+                //->money($symbol = 'idr', $thousandsSeparator = ',', $decimals = 0)
                 Tables\Columns\TextColumn::make('current_stock')
                 ->label('Total Stok'),
                 Tables\Columns\TextColumn::make('category')

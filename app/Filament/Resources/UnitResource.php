@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\UnitResource\Pages;
+use App\Filament\Resources\UnitResource\RelationManagers;
+use App\Models\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class UnitResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Unit::class;
 
     protected static ?string $navigationGroup = 'Master Data';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,10 +27,14 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category')
+                Forms\Components\TextInput::make('unit_symbols')
                     ->required()
                     ->maxLength(255)
-                    ->columnSpan(1),                
+                    ->columnSpan(1),
+                Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpan(1),    
             ]);
     }
 
@@ -38,10 +42,9 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                Tables\Columns\TextColumn::make('unit_symbols')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('category')
-                ->searchable(),
+                Tables\Columns\TextColumn::make('description'),              
             ])
             ->filters([
                 //
@@ -60,7 +63,7 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageCategories::route('/'),
+            'index' => Pages\ManageUnits::route('/'),
         ];
     }
 }
