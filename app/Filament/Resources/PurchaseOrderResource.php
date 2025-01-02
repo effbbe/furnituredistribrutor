@@ -51,8 +51,7 @@ class PurchaseOrderResource extends Resource
                     ->label(__('Nomor PO'))                    
                     ->default(fn() => self::generateCustomNumber())
                     ->disabled()
-                    ->columnSpan(['2xl' => 4]),
-                    //->dehydrated(false),
+                    ->columnSpan(['2xl' => 4]),                  
 
                     Forms\Components\DatePicker::make('po_date')
                     ->columnSpan([
@@ -120,10 +119,7 @@ class PurchaseOrderResource extends Resource
                     ->currencyMask()                                      
                     ->disabled(),
 
-                    Forms\Components\Hidden::make('amount'),                   
-
-                    Forms\Components\Hidden::make('user_id')
-                    ->default(fn () => auth()->id()),                 
+                    Forms\Components\Hidden::make('amount')  
                 ])              
                 ->minItems(1)
                 ->addActionLabel('Tambah Barang')
@@ -148,9 +144,6 @@ class PurchaseOrderResource extends Resource
 
                 Forms\Components\Hidden::make('total_amount'),
             ]),
-            
-            Forms\Components\Hidden::make('user_id')
-                    ->default(fn () => auth()->id()), 
         ]);
     }
 
@@ -210,8 +203,7 @@ class PurchaseOrderResource extends Resource
 
     public static function updateAmountValue(Get $get, Set $set)
     {
-       $formProduct = $get("../../");
-       //dd($formProduct);
+       $formProduct = $get("../../");       
        $allPODetails = $formProduct['po_number_purchase_order_detail'] ?? [];      
        $total = 0; 
         foreach ($allPODetails as $PODetail)
@@ -229,9 +221,5 @@ class PurchaseOrderResource extends Resource
         $set('amount', $amount);
         $set("../../total_amount_display", $total); 
         $set("../../total_amount", $total);
-        
-       
     }
-
-    
 }
