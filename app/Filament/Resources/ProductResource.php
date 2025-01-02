@@ -52,7 +52,8 @@ class ProductResource extends Resource
                 ->searchable(),
                 Forms\Components\TextInput::make('unit_price')
                 ->label('Harga Satuan')
-                //->money($symbol = 'idr', $thousandsSeparator = ',', $decimals = 0)
+                ->numeric()
+                ->inputMode('decimal')
                 ->maxLength(50)
                 ->required(),
                 Select::make('category')

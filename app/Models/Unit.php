@@ -10,4 +10,9 @@ class Unit extends Model
         'unit_symbols',
         'description'
     ];
+
+    public function unit_po_detail(): HasMany
+    {
+        return $this->hasMany(PurchaseOrderDetail::class);
+    }
 }

@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('sku')->unique();
             $table->string('product_name');
+            $table->string('slug');
             $table->text('description');
             $table->string('unit')->nullable();
-            $table->decimal('unit_price', 10, 2)->default(0);
+            $table->decimal('unit_price', 10, 0)->default(0);
             $table->unsignedInteger('current_stock')->default(0);            
             $table->string('category');           
             $table->timestamps();

@@ -10,6 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -61,6 +62,16 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->is_active == true;
     }
+   
+    public function user_id_po(): HasMany
+    {
+        return $this->hasMany(PurchaseOrder::class);
+    }
 
-    
+    public function user_id_po_detail(): HasMany
+    {
+        return $this->hasMany(PurchaseOrderDetail::class);
+    }
+
+        
 }

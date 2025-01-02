@@ -31,20 +31,26 @@ class SupplierResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Supplier')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('address')
+                    ->label('Alamat')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('phone')
+                    ->label('Telepon')
                     ->tel()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('npwp')
+                    ->label('Nomor NPWP')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('contact_name')
+                    ->label('Nama PIC')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('contact_phone')
+                    ->label('Telepon PIC')
                     ->tel()
                     ->maxLength(255),
             ]);
@@ -55,14 +61,19 @@ class SupplierResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Supplier')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->label('Alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('npwp')
+                    ->label('Nomor NPWP')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_name')
+                    ->label('Nama PIC')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_phone')
+                    ->label('Telepon PIC')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

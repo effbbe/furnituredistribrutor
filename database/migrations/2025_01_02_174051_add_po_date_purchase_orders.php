@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_active');
+        Schema::table('purchase_orders', function (Blueprint $table) {
+            $table->date('po_date')->after('po_number');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_active');
+        Schema::table('purchase_orders', function (Blueprint $table) {
+            $table->dropColumn('po_date');
         });
     }
 };
