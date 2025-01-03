@@ -188,18 +188,18 @@ class PurchaseOrderResource extends Resource
 
     public static function generateCustomNumber()
     {
-    // Get the last record
-    $lastRecord = PurchaseOrder::query()->latest('po_number')->first();
+        // Get the last record
+        $lastRecord = PurchaseOrder::query()->latest('po_number')->first();
 
-    // Extract the last number (if your number has a specific format)
-    if ($lastRecord && $lastRecord->po_number) {
-        $lastNumber = $lastRecord->po_number + 1;
-        return $lastNumber;
+        // Extract the last number (if your number has a specific format)
+        if ($lastRecord && $lastRecord->po_number) {
+            $lastNumber = $lastRecord->po_number + 1;
+            return $lastNumber;
+        }
+
+        // Start with an initial value if no record exists
+        return '1';
     }
-
-    // Start with an initial value if no record exists
-    return '1';
-}
 
     public static function updateAmountValue(Get $get, Set $set)
     {
