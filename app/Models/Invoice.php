@@ -8,14 +8,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Invoice extends Model
 {
-      /**
+      
+        protected $fillable = [
+            'invoice_number',
+            'invoice_date',
+            'subtotal',
+            'tax',
+            'total',
+            'customer_id'
+        ];
+
+        /**
        * Get all of the invoicedetails for the Invoice
        *
        * @return \Illuminate\Database\Eloquent\Relations\HasMany
        */
-      public function invoice_edetails(): HasMany
+      public function invoice_detail(): HasMany
       {
-          return $this->hasMany(InvoiceDetails::class);
+          return $this->hasMany(InvoiceDetail::class);
       }
 
       /**
@@ -25,6 +35,6 @@ class Invoice extends Model
        */
       public function customer(): BelongsTo
       {
-          return $this->belongsTo(Customers::class);
+          return $this->belongsTo(Customer::class);
       }
 }

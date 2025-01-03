@@ -5,8 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class InvoiceDetails extends Model
+class InvoiceDetail extends Model
 {
+    protected $fillable=[
+        'invoice_id',
+        'product_name',
+        'quantity',
+        'unit_price',
+        'amount'
+    ];
+
     /**
      * Get the invoice that owns the InvoiceDetails
      *
@@ -14,6 +22,6 @@ class InvoiceDetails extends Model
      */
     public function invoice(): BelongsTo
     {
-        return $this->belongsTo(Invoices::class);
+        return $this->belongsTo(Invoice::class);
     }
 }

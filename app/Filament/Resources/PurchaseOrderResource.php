@@ -187,7 +187,7 @@ class PurchaseOrderResource extends Resource
     }
 
     public static function generateCustomNumber()
-{
+    {
     // Get the last record
     $lastRecord = PurchaseOrder::query()->latest('po_number')->first();
 
