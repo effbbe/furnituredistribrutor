@@ -16,6 +16,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 use App\Models\Category;
 use App\Models\Unit;
@@ -38,24 +40,33 @@ class ProductResource extends Resource
                 ->label('Kode SKU')
                 ->required()
                 ->maxLength(255),
+
                 Forms\Components\TextInput::make('product_name')
                 ->label('Nama Produk')
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->reactive()
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+
+                Forms\Components\Hidden::make('slug'),
+
                 Forms\Components\Textarea::make('description')
                 ->label('Deskripsi Produk')
-                ->required()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->required(),
+
                 Select::make('unit')
                 ->label('Satuan')
                 ->options(Unit::all()->pluck('unit_symbols', 'unit_symbols'))
                 ->searchable(),
+
                 Forms\Components\TextInput::make('unit_price')
                 ->label('Harga Satuan')
-                ->numeric()
-                ->inputMode('decimal')
+                ->currencyMask()               
                 ->maxLength(50)
                 ->required(),
+
                 Select::make('category')
                 ->label('Kategori Produk')
                 ->options(Category::all()->pluck('category', 'category'))
@@ -69,17 +80,16 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('sku')
                 ->label('SKU')                
-                ->searchable(),
+                ->searchable(),                
                 Tables\Columns\TextColumn::make('product_name')
-                ->label('Nama Produk')                
-                ->searchable(),
+                ->label('Nama Produk')                               
+                ->searchable(),                
                 Tables\Columns\TextColumn::make('description')
                 ->label('Deskripsi Produk'),               
                 Tables\Columns\TextColumn::make('unit')
                 ->label('Unit'),             
                 Tables\Columns\TextColumn::make('unit_price')
-                ->label('Harga Satuan'),
-                //->money($symbol = 'idr', $thousandsSeparator = ',', $decimals = 0)
+                ->label('Harga Satuan'),                               
                 Tables\Columns\TextColumn::make('current_stock')
                 ->label('Total Stok'),
                 Tables\Columns\TextColumn::make('category')
